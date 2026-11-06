@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ЗооДом 🐾 — зоотовары с доставкой по Казахстану</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --peach:#F5B895;--peach-dark:#E8956B;--mint:#A8E6CF;--mint-dark:#7FCFB0;
+  --cream:#FFF8F0;--brown:#4A3428;--brown-light:#7A5C4A;--accent:#FF8B7B;
+  --white:#fff;--shadow:0 4px 16px rgba(74,52,40,.08);--shadow-hover:0 12px 28px rgba(74,52,40,.16);
+  --radius:18px;--radius-sm:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;color:var(--brown);background-color:var(--cream);
+  background-image:radial-gradient(circle at 10% 10%,rgba(245,184,149,.18) 0%,transparent 35%),
+    radial-gradient(circle at 90% 40%,rgba(168,230,207,.18) 0%,transparent 35%),
+    radial-gradient(circle at 50% 90%,rgba(255,139,123,.08) 0%,transparent 40%);
+  background-attachment:fixed;min-height:100vh;line-height:1.5;
+}
+img{max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none}
+input,select,textarea{font-family:inherit;font-size:1rem;color:var(--brown)}
+a{color:var(--peach-dark);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* HEADER */
+.header{background:rgba(255,248,240,.95);backdrop-filter:blur(8px);position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(74,52,40,.08)}
+.header-inner{max-width:1240px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-weight:900;font-size:1.5rem;color:var(--brown);white-space:nowrap}
+.logo span{display:inline-block;animation:wiggle 3s ease-in-out infinite}
+@keyframes wiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+.search-wrap{flex:1;min-width:180px;position:relative}
+.search-wrap input{width:100%;padding:11px 16px 11px 40px;border-radius:999px;border:2px solid rgba(74,52,40,.1);background:var(--white);outline:none;transition:.2s}
+.search-wrap input:focus{border-color:var(--peach);box-shadow:0 0 0 4px rgba(245,184,149,.25)}
+.search-wrap::before{content:"🔍";position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.6;pointer-events:none}
+.cart-btn{background:linear-gradient(135deg,var(--peach),var(--peach-dark));color:var(--white);font-weight:800;padding:11px 20px;border-radius:999px;display:flex;align-items:center;gap:8px;transition:.25s;box-shadow:0 4px 12px rgba(232,149,107,.3)}
+.cart-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(232,149,107,.45)}
+.cart-count{background:var(--brown);color:var(--white);font-size:.8rem;padding:2px 9px;border-radius:999px;min-width:22px;text-align:center}
+.cat-nav{max-width:1240px;margin:0 auto;padding:0 20px 12px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:thin}
+.cat-nav::-webkit-scrollbar{height:4px}
+.cat-nav::-webkit-scrollbar-thumb{background:var(--peach);border-radius:2px}
+.cat-nav button{background:var(--white);color:var(--brown);padding:7px 14px;border-radius:999px;font-weight:700;font-size:.85rem;white-space:nowrap;border:2px solid transparent;transition:.2s}
+.cat-nav button:hover{background:var(--mint);border-color:var(--mint-dark)}
+.cat-nav button.active{background:var(--brown);color:var(--white)}
+
+/* BANNER */
+.banner{max-width:1240px;margin:24px auto;padding:0 20px}
+.banner-content{position:relative;overflow:hidden;border-radius:28px;padding:48px 40px;background:linear-gradient(135deg,#FFD3B6 0%,#FFAAA5 50%,#A8E6CF 100%);color:var(--brown)}
+.banner-content h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;margin-bottom:12px;line-height:1.15}
+.banner-content p{font-size:1.1rem;margin-bottom:24px;max-width:560px;opacity:.85}
+.banner-decor{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.banner-decor span{position:absolute;font-size:2.4rem;opacity:.4;animation:float 6s ease-in-out infinite}
+.banner-decor .paw:nth-child(1){top:12%;left:60%;animation-delay:0s}
+.banner-decor .paw:nth-child(2){top:70%;left:75%;animation-delay:1.5s;font-size:1.8rem}
+.banner-decor .paw:nth-child(3){top:30%;left:88%;animation-delay:3s;font-size:2rem}
+.banner-decor .bone{bottom:18%;left:62%;animation-delay:.5s}
+.banner-decor .fish{top:55%;left:80%;animation-delay:2s}
+.banner-decor .cat{top:15%;left:68%;font-size:3.5rem;animation-delay:1s;opacity:.55}
+.banner-decor .dog{bottom:15%;left:88%;font-size:3.2rem;animation-delay:2.5s;opacity:.5}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(8deg)}}
+
+/* BUTTONS */
+.btn-primary{background:linear-gradient(135deg,var(--peach),var(--peach-dark));color:var(--white);font-weight:800;padding:13px 28px;border-radius:999px;transition:.25s;box-shadow:0 6px 16px rgba(232,149,107,.35);font-size:1rem}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(232,149,107,.5)}
+.btn-secondary{background:var(--white);color:var(--brown);font-weight:700;padding:12px 24px;border-radius:999px;border:2px solid rgba(74,52,40,.15);transition:.2s}
+.btn-secondary:hover{background:var(--cream);border-color:var(--brown)}
+.btn-reset{background:transparent;color:var(--brown-light);font-weight:700;padding:10px;margin-top:8px;border-radius:10px;transition:.2s;width:100%}
+.btn-reset:hover{background:var(--cream);color:var(--accent)}
+
+/* SECTIONS */
+section h2{font-size:1.8rem;font-weight:900;margin-bottom:20px}
+.categories-section,.catalog-section,.why-us{max-width:1240px;margin:32px auto;padding:0 20px}
+.cat-tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:16px}
+.cat-tile{background:var(--white);border-radius:var(--radius);padding:22px 16px;text-align:center;cursor:pointer;transition:.3s;box-shadow:var(--shadow);border:2px solid transparent}
+.cat-tile:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--peach)}
+.cat-tile .cat-emoji{width:64px;height:64px;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:2rem}
+.cat-tile .cat-name{font-weight:800;font-size:.9rem;line-height:1.25}
+.cat-tile .cat-count{font-size:.75rem;color:var(--brown-light);margin-top:4px}
+
+/* CATALOG */
+.catalog-layout{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+.filters{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);position:sticky;top:130px}
+.filters h3{font-size:1.1rem;margin-bottom:14px}
+.filters label{display:block;font-size:.85rem;font-weight:700;color:var(--brown-light);margin-bottom:12px}
+.filters select,.filters input{width:100%;margin-top:5px;padding:9px 12px;border-radius:10px;border:2px solid rgba(74,52,40,.1);background:var(--cream);outline:none;transition:.2s;font-weight:600}
+.filters select:focus,.filters input:focus{border-color:var(--peach);background:var(--white)}
+.sort-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.sort-bar #resultsCount{font-weight:700;color:var(--brown-light);font-size:.9rem}
+.sort-bar select{padding:8px 14px;border-radius:999px;border:2px solid rgba(74,52,40,.1);background:var(--white);font-weight:700;outline:none;cursor:pointer}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px}
+
+/* PRODUCT CARD */
+.product-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);transition:.3s;display:flex;flex-direction:column;position:relative}
+.product-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.product-image{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;font-size:3.6rem;position:relative;transition:.35s}
+.product-card:hover .product-image{transform:scale(1.05)}
+.product-image::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle at 20% 80%,rgba(255,255,255,.35) 0,transparent 40%),radial-gradient(circle at 80% 20%,rgba(255,255,255,.25) 0,transparent 40%);pointer-events:none}
+.product-body{padding:14px 14px 16px;display:flex;flex-direction:column;flex:1;gap:6px}
+.product-brand{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--peach-dark)}
+.product-name{font-weight:800;font-size:.95rem;line-height:1.3;min-height:2.6em}
+.product-desc{font-size:.78rem;color:var(--brown-light);line-height:1.35;flex:1;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.product-price{font-weight:900;font-size:1.15rem;color:var(--brown);margin-top:6px}
+.add-btn{background:linear-gradient(135deg,var(--mint),var(--mint-dark));color:var(--brown);font-weight:800;padding:9px 12px;border-radius:12px;transition:.25s;margin-top:6px}
+.add-btn:hover{background:linear-gradient(135deg,var(--mint-dark),#5FBB9A);transform:scale(1.02)}
+.add-btn:active{transform:scale(.97)}
+
+/* WHY US */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.why-card{background:var(--white);border-radius:var(--radius);padding:28px 22px;text-align:center;box-shadow:var(--shadow);transition:.3s;border-top:4px solid var(--peach)}
+.why-card:nth-child(2){border-color:var(--mint)}
+.why-card:nth-child(3){border-color:var(--accent)}
+.why-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
+.why-icon{font-size:2.6rem;margin-bottom:12px}
+.why-card h3{font-size:1.1rem;margin-bottom:8px}
+.why-card p{font-size:.92rem;color:var(--brown-light)}
+
+/* FOOTER */
+.footer{background:var(--brown);color:#F5E8DC;margin-top:60px;padding:40px 20px 0}
+.footer-inner{max-width:1240px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;padding-bottom:28px}
+.footer .logo{color:#FFF8F0;margin-bottom:8px}
+.footer h4{color:#FFF8F0;font-size:1rem;margin-bottom:10px}
+.footer p{font-size:.9rem;color:#CDB8A8;margin-bottom:6px}
+.footer a{color:var(--mint)}
+.footer-bottom{text-align:center;padding:16px;border-top:1px solid rgba(255,255,255,.1);font-size:.82rem;color:#A8968A}
+
+/* CART */
+.cart-overlay{position:fixed;inset:0;background:rgba(74,52,40,.4);opacity:0;pointer-events:none;transition:opacity .3s;z-index:99}
+.cart-overlay.open{opacity:1;pointer-events:auto}
+.cart-panel{position:fixed;top:0;right:0;width:min(420px,100%);height:100vh;background:var(--white);transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:100;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,.15)}
+.cart-panel.open{transform:translateX(0)}
+.cart-header{padding:20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(74,52,40,.1)}
+.cart-header h3{font-size:1.3rem}
+.cart-header button{font-size:1.4rem;background:transparent;color:var(--brown);width:36px;height:36px;border-radius:50%;transition:.2s}
+.cart-header button:hover{background:var(--cream)}
+.cart-items{flex:1;overflow-y:auto;padding:16px 20px}
+.cart-empty{text-align:center;padding:40px 0;color:var(--brown-light)}
+.cart-empty .em{font-size:3rem;display:block;margin-bottom:10px}
+.cart-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid rgba(74,52,40,.06);align-items:center}
+.cart-item-img{width:56px;height:56px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-name{font-weight:700;font-size:.88rem;line-height:1.2;margin-bottom:4px}
+.cart-item-price{font-size:.82rem;color:var(--brown-light)}
+.cart-qty{display:flex;align-items:center;gap:6px;margin-top:6px}
+.cart-qty button{width:26px;height:26px;border-radius:8px;background:var(--cream);color:var(--brown);font-weight:800;transition:.2s;font-size:.9rem}
+.cart-qty button:hover{background:var(--peach);color:var(--white)}
+.cart-qty span{min-width:22px;text-align:center;font-weight:800;font-size:.9rem}
+.cart-remove{background:transparent;color:var(--accent);font-size:1.1rem;padding:4px;margin-left:4px;transition:.2s}
+.cart-remove:hover{transform:scale(1.2)}
+.cart-footer{padding:20px;border-top:1px solid rgba(74,52,40,.1);background:var(--cream)}
+.cart-total{font-size:1.15rem;margin-bottom:14px;display:flex;justify-content:space-between}
+.cart-total strong{font-size:1.35rem;color:var(--brown)}
+.cart-footer .btn-primary{width:100%}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(74,52,40,.5);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal.open{display:flex;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-content{background:var(--white);border-radius:var(--radius);padding:28px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:scaleIn .3s cubic-bezier(.4,0,.2,1);max-height:90vh;overflow-y:auto}
+@keyframes scaleIn{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+.modal-content h3{margin-bottom:16px;font-size:1.3rem}
+.modal-content input,.modal-content textarea{width:100%;padding:12px 14px;border-radius:12px;border:2px solid rgba(74,52,40,.1);margin-bottom:12px;background:var(--cream);outline:none;transition:.2s}
+.modal-content input:focus,.modal-content textarea:focus{border-color:var(--peach);background:var(--white)}
+.modal-content textarea{resize:vertical;min-height:70px}
+.modal-actions{display:flex;gap:10px;margin-top:8px}
+.modal-actions button{flex:1}
+.order-success{text-align:center;padding:20px 0}
+.order-success h3{margin:12px 0}
+.order-success p{color:var(--brown-light);margin-bottom:12px;font-size:.95rem}
+.order-success .tg-big{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#2AABEE,#229ED9);color:#fff!important;text-decoration:none!important;font-weight:800;padding:14px 24px;border-radius:999px;margin:8px 0 16px;transition:.2s;box-shadow:0 6px 16px rgba(42,171,238,.35)}
+.order-success .tg-big:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(42,171,238,.5)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .catalog-layout{grid-template-columns:1fr}
+  .filters{position:static;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+  .filters h3{grid-column:1/-1;margin-bottom:4px}
+  .filters label{margin-bottom:0}
+  .btn-reset{grid-column:1/-1}
+}
+@media(max-width:640px){
+  .header-inner{padding:12px 16px;gap:10px}
+  .logo{font-size:1.25rem}
+  .cart-btn{padding:9px 14px;font-size:.85rem}
+  .banner-content{padding:32px 22px;border-radius:20px}
+  .banner-content h1{font-size:1.5rem}
+  .banner-content p{font-size:.95rem}
+  section h2{font-size:1.4rem}
+  .cat-tiles{grid-template-columns:repeat(2,1fr);gap:10px}
+  .cat-tile{padding:16px 10px}
+  .cat-tile .cat-emoji{width:48px;height:48px;font-size:1.5rem}
+  .cat-tile .cat-name{font-size:.8rem}
+  .product-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .product-body{padding:10px}
+  .product-name{font-size:.85rem}
+  .product-desc{font-size:.72rem}
+  .product-price{font-size:1rem}
+  .product-image{font-size:2.6rem}
+  .why-us{margin:24px auto}
+  .footer-inner{grid-template-columns:1fr 1fr;gap:20px}
+}
+@media(max-width:380px){
+  .product-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo">ЗооДом <span>🐾</span></a>
+    <div class="search-wrap">
+      <input type="search" id="search" placeholder="Поиск товаров...">
+    </div>
+    <button class="cart-btn" id="cartBtn">🛒 <span class="cart-btn-text">Корзина</span> <span class="cart-count" id="cartCount">0</span></button>
+  </div>
+  <nav class="cat-nav" id="catNav"></nav>
+</header>
+
+<section class="banner">
+  <div class="banner-content">
+    <h1>Всё для ваших любимцев 🐾</h1>
+    <p>Корма, игрушки, аквариумы и переноски — с доставкой по всему Казахстану. Цены ниже рынка на 5–10%.</p>
+    <button class="btn-primary" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Смотреть каталог</button>
+    <div class="banner-decor">
+      <span class="paw">🐾</span><span class="paw">🐾</span><span class="paw">🐾</span>
+      <span class="bone">🦴</span><span class="fish">🐠</span>
+      <span class="cat">🐱</span><span class="dog">🐶</span>
+    </div>
+  </div>
+</section>
+
+<section class="categories-section">
+  <h2>Категории</h2>
+  <div class="cat-tiles" id="catTiles"></div>
+</section>
+
+<section id="catalog" class="catalog-section">
+  <h2>Каталог товаров</h2>
+  <div class="catalog-layout">
+    <aside class="filters">
+      <h3>Фильтры</h3>
+      <label>Категория<select id="filterCategory"><option value="">Все</option></select></label>
+      <label>Для кого<select id="filterPet"><option value="">Все</option><option value="Кошки">Кошки</option><option value="Собаки">Собаки</option><option value="Рыбки">Рыбки</option></select></label>
+      <label>Цена от<input type="number" id="filterPriceFrom" placeholder="0" min="0"></label>
+      <label>Цена до<input type="number" id="filterPriceTo" placeholder="300000" min="0"></label>
+      <label>Бренд<select id="filterBrand"><option value="">Все</option></select></label>
+      <button class="btn-reset" id="resetFilters">Сбросить фильтры</button>
+    </aside>
+    <div class="products-area">
+      <div class="sort-bar">
+        <span id="resultsCount">Найдено: 0</span>
+        <select id="sortSelect">
+          <option value="default">По умолчанию</option>
+          <option value="price-asc">Цена ↑</option>
+          <option value="price-desc">Цена ↓</option>
+          <option value="name-asc">Название А-Я</option>
+          <option value="name-desc">Название Я-А</option>
+        </select>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section class="why-us">
+  <h2>Почему мы</h2>
+  <div class="why-grid">
+    <div class="why-card"><div class="why-icon">🚚</div><h3>Доставка по всему Казахстану</h3><p>Отправляем заказы в любой город — не только по Алматы.</p></div>
+    <div class="why-card"><div class="why-icon">✅</div><h3>Гарантия качества</h3><p>Только проверенные бренды и сертифицированные товары.</p></div>
+    <div class="why-card"><div class="why-icon">💬</div><h3>Консультации</h3><p>Поможем подобрать питание и уход под вашего питомца в Telegram.</p></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><div class="logo">ЗооДом 🐾</div><p>Всё для ваших любимцев с 2018 года.</p></div>
+    <div><h4>Контакты</h4><p>Telegram: <a href="https://t.me/ZooDomKZ">@ZooDomKZ</a></p><p>Работаем по всему Казахстану</p></div>
+    <div><h4>Часы работы</h4><p>Пн-Вс: 09:00 – 21:00</p><p>Онлайн-заказы: 24/7</p></div>
+    <div><h4>Соцсети</h4><p>📱 Telegram: @ZooDomKZ</p><p>✈️ Отвечаем в течение дня</p></div>
+  </div>
+  <div class="footer-bottom">© 2024 ЗооДом. Все права защищены.</div>
+</footer>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header"><h3>🛒 Корзина</h3><button id="closeCart" aria-label="Закрыть">✕</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter">
+    <div class="cart-total"><span>Итого:</span><strong id="cartTotal">0 ₸</strong></div>
+    <button class="btn-primary" id="checkoutBtn">Оформить заказ</button>
+  </div>
+</aside>
+
+<div class="modal" id="checkoutModal">
+  <div class="modal-content">
+    <div id="checkoutFormWrap">
+      <h3>Оформить заказ</h3>
+      <p style="font-size:.85rem;color:var(--brown-light);margin-bottom:14px">Заполните форму — откроется Telegram с готовым сообщением, останется нажать «Отправить».</p>
+      <form id="checkoutForm">
+        <input type="text" id="orderName" placeholder="Ваше имя" required>
+        <input type="tel" id="orderPhone" placeholder="Телефон" required>
+        <input type="text" id="orderAddress" placeholder="Город и адрес доставки" required>
+        <textarea id="orderMessage" placeholder="Сообщение (необязательно)"></textarea>
+        <div class="modal-actions">
+          <button type="button" id="cancelCheckout" class="btn-secondary">Отмена</button>
+          <button type="submit" class="btn-primary">Отправить</button>
+        </div>
+      </form>
+    </div>
+    <div id="orderSuccess" class="order-success" style="display:none">
+      <div style="font-size:3rem">✅</div>
+      <h3>Заказ готов к отправке!</h3>
+      <p>Мы открыли Telegram с готовым текстом заказа.<br>Нажмите <b>«Отправить»</b> в чате, чтобы завершить оформление.</p>
+      <a href="#" target="_blank" rel="noopener" id="tgLink" class="tg-big">✈️ Открыть в Telegram</a>
+      <div>
+        <button class="btn-secondary" onclick="closeCheckout()">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =========================================================
+   КАТЕГОРИИ
+   ========================================================= */
+const CATEGORIES_INFO = [
+  {name:'Переноски', emoji:'🧳', grad:'linear-gradient(135deg,#FFD3B6,#FFAAA5)'},
+  {name:'Клетки', emoji:'🏠', grad:'linear-gradient(135deg,#A8E6CF,#7FCFB0)'},
+  {name:'Аквариумы без оборудования', emoji:'🐠', grad:'linear-gradient(135deg,#B4E1FF,#7FC8F8)'},
+  {name:'Аквариумы с оборудованием', emoji:'🐟', grad:'linear-gradient(135deg,#A0D8F1,#5FBFF9)'},
+  {name:'Спальные места', emoji:'🛏️', grad:'linear-gradient(135deg,#FFC8DD,#FFAFCC)'},
+  {name:'Игрушки', emoji:'🎾', grad:'linear-gradient(135deg,#FFE29F,#FFA99F)'},
+  {name:'Жидкие корма', emoji:'🥫', grad:'linear-gradient(135deg,#FFD6A5,#FFB37D)'},
+  {name:'Сухие корма', emoji:'🦴', grad:'linear-gradient(135deg,#E5C39E,#C99C6E)'},
+  {name:'Корма для рыб', emoji:'🐡', grad:'linear-gradient(135deg,#B8E0D2,#95B8D1)'},
+  {name:'Поилки', emoji:'💧', grad:'linear-gradient(135deg,#D4F0F0,#8FD5D5)'}
+];
+const CAT_GRAD = Object.fromEntries(CATEGORIES_INFO.map(c=>[c.name,c.grad]));
+
+/* =========================================================
+   ТОВАРЫ (151 позиция)
+   ========================================================= */
+const PRODUCTS = [
+/* --- ПЕРЕНОСКИ (12) --- */
+{id:1,name:"Переноска пластиковая для кошек",brand:"Ferplast",category:"Переноски",pet:"Кошки",price:6890,description:"Прочный пластик, вентиляция, размер 32×24×22 см",emoji:"🧳"},
+{id:2,name:"Переноска пластиковая для кошек L",brand:"Ferplast",category:"Переноски",pet:"Кошки",price:11490,description:"Размер 48×32×30 см, металлическая дверца",emoji:"🧳"},
+{id:3,name:"Переноска тканевая для кошек",brand:"Petcomfort",category:"Переноски",pet:"Кошки",price:7590,description:"Мягкая сумка с сеткой, 40×25×25 см",emoji:"👜"},
+{id:4,name:"Переноска тканевая премиум",brand:"Petcomfort",category:"Переноски",pet:"Кошки",price:13890,description:"Плотная ткань, съёмный матрас, 45×30×30 см",emoji:"👜"},
+{id:5,name:"Рюкзак с окном-иллюминатором",brand:"Ibiyaya",category:"Переноски",pet:"Кошки",price:14900,description:"Прозрачный купол, вентиляция, 28×26×42 см",emoji:"🎒"},
+{id:6,name:"Рюкзак-переноска XL",brand:"Ibiyaya",category:"Переноски",pet:"Кошки",price:24790,description:"Для крупных кошек, 34×30×46 см, усиленное дно",emoji:"🎒"},
+{id:7,name:"Переноска для авиаперелётов",brand:"Ferplast",category:"Переноски",pet:"Кошки",price:16490,description:"Соответствует стандартам IATA, 55×36×35 см",emoji:"✈️"},
+{id:8,name:"Переноска для авиаперелётов XL",brand:"Ibiyaya",category:"Переноски",pet:"Кошки",price:27900,description:"Металлические крепления, 60×40×38 см",emoji:"✈️"},
+{id:9,name:"Переноска складная",brand:"Petcomfort",category:"Переноски",pet:"Кошки и собаки",price:9890,description:"Складывается в плоский вид, 50×30×32 см",emoji:"📦"},
+{id:10,name:"Переноска на колёсиках",brand:"Ibiyaya",category:"Переноски",pet:"Кошки и собаки",price:22900,description:"Съёмная ручка, 4 колеса, 55×35×40 см",emoji:"🎡"},
+{id:11,name:"Переноска на колёсиках премиум",brand:"Ibiyaya",category:"Переноски",pet:"Собаки",price:38900,description:"Усиленная рама, для собак до 12 кг, 70×46×52 см",emoji:"🎡"},
+{id:12,name:"Переноска для крупных собак",brand:"Ferplast",category:"Переноски",pet:"Собаки",price:24900,description:"Металлическая дверца, 78×52×58 см",emoji:"🐶"},
+
+/* --- КЛЕТКИ (9) --- */
+{id:13,name:"Клетка для собак S",brand:"Ferplast",category:"Клетки",pet:"Собаки",price:14900,description:"Металлическая складная, 60×45×50 см",emoji:"🏠"},
+{id:14,name:"Клетка для собак M",brand:"Ferplast",category:"Клетки",pet:"Собаки",price:21900,description:"Металлическая складная, 76×52×60 см",emoji:"🏠"},
+{id:15,name:"Клетка для собак L",brand:"Ferplast",category:"Клетки",pet:"Собаки",price:32900,description:"Металлическая складная, 92×62×68 см",emoji:"🏠"},
+{id:16,name:"Клетка для собак XL",brand:"Ferplast",category:"Клетки",pet:"Собаки",price:46900,description:"Металлическая складная, 107×70×80 см",emoji:"🏠"},
+{id:17,name:"Вольер для щенков",brand:"Ferplast",category:"Клетки",pet:"Собаки",price:28900,description:"8 секций, 80 см высота, с дверцей",emoji:"🔲"},
+{id:18,name:"Вольер для щенков XL",brand:"Ferplast",category:"Клетки",pet:"Собаки",price:39900,description:"12 секций, 100 см высота, для крупных пород",emoji:"🔲"},
+{id:19,name:"Клетка-домик для кошек",brand:"Petcomfort",category:"Клетки",pet:"Кошки",price:18900,description:"Деревянный домик с полочками, 60×45×70 см",emoji:"🐱"},
+{id:20,name:"Двухуровневая клетка для кошек",brand:"Petcomfort",category:"Клетки",pet:"Кошки",price:34900,description:"2 полки, лестница, 70×50×110 см",emoji:"🐱"},
+{id:21,name:"Трёхуровневый вольер для кошек",brand:"Petcomfort",category:"Клетки",pet:"Кошки",price:56900,description:"3 уровня, гамаки, 80×60×150 см",emoji:"🏰"},
+
+/* --- АКВАРИУМЫ БЕЗ ОБОРУДОВАНИЯ (14) --- */
+{id:22,name:"Аквариум 20 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:7900,description:"Прямоугольный, стекло 4 мм, с крышкой",emoji:"🐠"},
+{id:23,name:"Аквариум 30 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:10900,description:"Стекло 5 мм, 40×25×30 см",emoji:"🐠"},
+{id:24,name:"Аквариум 40 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:13900,description:"Стекло 5 мм, 50×30×30 см",emoji:"🐠"},
+{id:25,name:"Аквариум 54 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:17900,description:"Стекло 6 мм, 60×30×30 см",emoji:"🐠"},
+{id:26,name:"Аквариум 60 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:19900,description:"Стекло 6 мм, 60×30×35 см",emoji:"🐠"},
+{id:27,name:"Аквариум 80 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:26900,description:"Стекло 6 мм, 80×35×40 см",emoji:"🐠"},
+{id:28,name:"Аквариум 100 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:33900,description:"Стекло 8 мм, 100×40×45 см",emoji:"🐠"},
+{id:29,name:"Аквариум 120 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:42900,description:"Стекло 8 мм, 120×40×50 см",emoji:"🐠"},
+{id:30,name:"Аквариум 150 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:54900,description:"Стекло 10 мм, 150×45×55 см",emoji:"🐠"},
+{id:31,name:"Круглый аквариум 25 л",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:11900,description:"Диаметр 35 см, стекло 5 мм, с подставкой",emoji:"🐠"},
+{id:32,name:"Угловой аквариум 90 л",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:48900,description:"Угловая форма, стекло 6 мм, с крышкой",emoji:"🐠"},
+{id:33,name:"Панорамный аквариум 130 л",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:69900,description:"Гнутое стекло 8 мм, 100×40×50 см",emoji:"🐠"},
+{id:34,name:"Аквариум 200 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:98900,description:"Стекло 10 мм, 100×50×60 см, с крышкой",emoji:"🐠"},
+{id:35,name:"Аквариум 300 л без оборудования",brand:"Aquael",category:"Аквариумы без оборудования",pet:"Рыбки",price:189000,description:"Стекло 12 мм, 120×55×60 см, усиленная рама",emoji:"🐠"},
+
+/* --- АКВАРИУМЫ С ОБОРУДОВАНИЕМ (7, уникальные описания) --- */
+{id:36,name:"Аквариум 30 л с оборудованием",brand:"Aquael",category:"Аквариумы с оборудованием",pet:"Рыбки",price:32900,description:"Фильтр Aquael Mini, LED-свет, нагреватель 50 Вт, компрессор, крышка",emoji:"🐟"},
+{id:37,name:"Аквариум 60 л с оборудованием",brand:"Aquael",category:"Аквариумы с оборудованием",pet:"Рыбки",price:49900,description:"Фильтр Aquael Fan 1, LED-свет, нагреватель 75 Вт, компрессор, крышка",emoji:"🐟"},
+{id:38,name:"Аквариум 80 л с оборудованием",brand:"Aquael",category:"Аквариумы с оборудованием",pet:"Рыбки",price:64900,description:"Фильтр Aquael Turbo 500, LED-свет, нагреватель 100 Вт, компрессор, крышка",emoji:"🐟"},
+{id:39,name:"Аквариум 100 л с оборудованием",brand:"Aquael",category:"Аквариумы с оборудованием",pet:"Рыбки",price:82900,description:"Фильтр Aquael Turbo 1000, LED-свет, нагреватель 150 Вт, компрессор, крышка",emoji:"🐟"},
+{id:40,name:"Аквариум 150 л с оборудованием",brand:"Aquael",category:"Аквариумы с оборудованием",pet:"Рыбки",price:124900,description:"Фильтр Aquael Turbo 1500, LED-свет, нагреватель 200 Вт, компрессор, крышка",emoji:"🐟"},
+{id:41,name:"Аквариум 200 л с оборудованием",brand:"Aquael",category:"Аквариумы с оборудованием",pet:"Рыбки",price:179000,description:"Фильтр Aquael Unimax 250, LED-свет, нагреватель 250 Вт, компрессор, тумба",emoji:"🐟"},
+{id:42,name:"Аквариум 300 л с оборудованием",brand:"Aquael",category:"Аквариумы с оборудованием",pet:"Рыбки",price:289000,description:"Фильтр Aquael Unimax 500, LED-свет, нагреватель 300 Вт, компрессор, тумба и крышка",emoji:"🐟"},
+
+/* --- СПАЛЬНЫЕ МЕСТА (9) --- */
+{id:43,name:"Лежанка-пончик S",brand:"Petcomfort",category:"Спальные места",pet:"Кошки и собаки",price:6900,description:"Плюш, диаметр 50 см, для мелких питомцев",emoji:"🛏️"},
+{id:44,name:"Лежанка-пончик M",brand:"Petcomfort",category:"Спальные места",pet:"Кошки и собаки",price:9900,description:"Плюш, диаметр 60 см, съёмный чехол",emoji:"🛏️"},
+{id:45,name:"Домик для кошки",brand:"Petcomfort",category:"Спальные места",pet:"Кошки",price:8900,description:"Закрытый домик, 40×40×45 см, мягкий плюш",emoji:"🏡"},
+{id:46,name:"Пуф-лежанка",brand:"Petcomfort",category:"Спальные места",pet:"Кошки и собаки",price:12900,description:"Мягкий пуф, 55 см, для мелких собак и кошек",emoji:"🛋️"},
+{id:47,name:"Гамак на батарею",brand:"Petcomfort",category:"Спальные места",pet:"Кошки",price:7500,description:"Крепление на радиатор, 50×30 см, для кошек",emoji:"🌡️"},
+{id:48,name:"Ортопедический матрас M",brand:"Petcomfort",category:"Спальные места",pet:"Собаки",price:19900,description:"Пена с эффектом памяти, 70×50 см",emoji:"🛌"},
+{id:49,name:"Ортопедический матрас L",brand:"Petcomfort",category:"Спальные места",pet:"Собаки",price:27900,description:"Пена с эффектом памяти, 90×60 см",emoji:"🛌"},
+{id:50,name:"Ортопедический матрас XL",brand:"Petcomfort",category:"Спальные места",pet:"Собаки",price:36900,description:"Пена с эффектом памяти, 110×70 см",emoji:"🛌"},
+{id:51,name:"Диван с бортиками для собак",brand:"Petcomfort",category:"Спальные места",pet:"Собаки",price:24900,description:"Мягкий диван с высокими бортиками, 90×65 см",emoji:"🛋️"},
+
+/* --- ИГРУШКИ (12) --- */
+{id:52,name:"Лазерная автоигрушка",brand:"Pet Tech",category:"Игрушки",pet:"Кошки",price:4900,description:"Автоматический лазер, случайный узор, USB",emoji:"🔴"},
+{id:53,name:"Автоматический мяч для собак",brand:"Pet Tech",category:"Игрушки",pet:"Собаки",price:13900,description:"Движется сам, аккумулятор, 8 см",emoji:"⚽"},
+{id:54,name:"Интерактивный лабиринт для кошек",brand:"Trixie",category:"Игрушки",pet:"Кошки",price:5900,description:"Складывающийся лабиринт, 25×25 см",emoji:"🧩"},
+{id:55,name:"Пазл-головоломка для собак",brand:"Trixie",category:"Игрушки",pet:"Собаки",price:6900,description:"Деревянная доска с ячейками, 30×30 см",emoji:"🧩"},
+{id:56,name:"Когтеточка-комплекс",brand:"Petcomfort",category:"Игрушки",pet:"Кошки",price:18900,description:"Столбик с лежанкой и игрушкой, 40×40×60 см",emoji:"🐈"},
+{id:57,name:"Кошачье дерево",brand:"Petcomfort",category:"Игрушки",pet:"Кошки",price:38900,description:"3 уровня, когтеточки, гамак, 60×50×130 см",emoji:"🌳"},
+{id:58,name:"Туннель складной",brand:"Trixie",category:"Игрушки",pet:"Кошки и собаки",price:4500,description:"Складывается, диаметр 25 см, длина 90 см",emoji:"🚇"},
+{id:59,name:"Катальная дорожка с шариком",brand:"Trixie",category:"Игрушки",pet:"Кошки",price:4900,description:"3 уровня, 27 см, с шариком и мышкой",emoji:"🎢"},
+{id:60,name:"Кормушка-головоломка",brand:"Trixie",category:"Игрушки",pet:"Кошки и собаки",price:6500,description:"Нескользящая, 4 ячейки, 30×30 см",emoji:"🎯"},
+{id:61,name:"Умный мячик с приложением",brand:"Pet Tech",category:"Игрушки",pet:"Собаки",price:21900,description:"Bluetooth, управление через приложение, 6 см",emoji:"📱"},
+{id:62,name:"Kong Classic L",brand:"Kong",category:"Игрушки",pet:"Собаки",price:6900,description:"Резиновый, для крупных собак, 12 см",emoji:"🔴"},
+{id:63,name:"Дентал-игрушка премиум",brand:"Trixie",category:"Игрушки",pet:"Собаки",price:5500,description:"Массаж дёсен, канавки для лакомства",emoji:"🦷"},
+
+/* --- ЖИДКИЕ КОРМА ДЛЯ КОШЕК (30) --- */
+{id:64,name:"Whiskas пауч 75 г курица",brand:"Whiskas",category:"Жидкие корма",pet:"Кошки",price:230,description:"Пауч 75 г, курица, для котят",emoji:"🥫"},
+{id:65,name:"Whiskas пауч 75 г говядина",brand:"Whiskas",category:"Жидкие корма",pet:"Кошки",price:230,description:"Пауч 75 г, говядина, для взрослых кошек",emoji:"🥫"},
+{id:66,name:"Whiskas пауч 75 г лосось",brand:"Whiskas",category:"Жидкие корма",pet:"Кошки",price:230,description:"Пауч 75 г, лосось, для стерилизованных",emoji:"🥫"},
+{id:67,name:"Felix пауч 85 г курица",brand:"Felix",category:"Жидкие корма",pet:"Кошки",price:300,description:"Пауч 85 г, курица, для взрослых кошек",emoji:"🥫"},
+{id:68,name:"Felix пауч 85 г индейка",brand:"Felix",category:"Жидкие корма",pet:"Кошки",price:300,description:"Пауч 85 г, индейка, для котят",emoji:"🥫"},
+{id:69,name:"Felix пауч 85 г кролик",brand:"Felix",category:"Жидкие корма",pet:"Кошки",price:300,description:"Пауч 85 г, кролик, чувствительное пищеварение",emoji:"🥫"},
+{id:70,name:"Gourmet Gold пауч 85 г говядина",brand:"Gourmet Gold",category:"Жидкие корма",pet:"Кошки",price:440,description:"Пауч 85 г, говядина, для взрослых кошек",emoji:"🥫"},
+{id:71,name:"Gourmet Gold пауч 85 г утка",brand:"Gourmet Gold",category:"Жидкие корма",pet:"Кошки",price:440,description:"Пауч 85 г, утка, для стерилизованных",emoji:"🥫"},
+{id:72,name:"Gourmet Gold пауч 85 г тунец",brand:"Gourmet Gold",category:"Жидкие корма",pet:"Кошки",price:440,description:"Пауч 85 г, тунец, для взрослых кошек",emoji:"🥫"},
+{id:73,name:"Sheba пауч 75 г лосось",brand:"Sheba",category:"Жидкие корма",pet:"Кошки",price:410,description:"Пауч 75 г, лосось, для взрослых кошек",emoji:"🥫"},
+{id:74,name:"Sheba пауч 75 г ягнёнок",brand:"Sheba",category:"Жидкие корма",pet:"Кошки",price:410,description:"Пауч 75 г, ягнёнок, для стерилизованных",emoji:"🥫"},
+{id:75,name:"Sheba пауч 75 г курица",brand:"Sheba",category:"Жидкие корма",pet:"Кошки",price:410,description:"Пауч 75 г, курица, для котят",emoji:"🥫"},
+{id:76,name:"Purina Pro Plan пауч 85 г курица",brand:"Pro Plan",category:"Жидкие корма",pet:"Кошки",price:480,description:"Пауч 85 г, курица, для взрослых кошек",emoji:"🥫"},
+{id:77,name:"Purina Pro Plan пауч 85 г индейка",brand:"Pro Plan",category:"Жидкие корма",pet:"Кошки",price:480,description:"Пауч 85 г, индейка, для котят",emoji:"🥫"},
+{id:78,name:"Purina Pro Plan пауч 85 г лосось",brand:"Pro Plan",category:"Жидкие корма",pet:"Кошки",price:480,description:"Пауч 85 г, лосось, для стерилизованных",emoji:"🥫"},
+{id:79,name:"Royal Canin пауч 85 г курица для кошек",brand:"Royal Canin",category:"Жидкие корма",pet:"Кошки",price:690,description:"Пауч 85 г, курица, для взрослых кошек",emoji:"🥫"},
+{id:80,name:"Royal Canin пауч 85 г говядина для кошек",brand:"Royal Canin",category:"Жидкие корма",pet:"Кошки",price:690,description:"Пауч 85 г, говядина, для котят",emoji:"🥫"},
+{id:81,name:"Royal Canin пауч 85 г кролик для кошек",brand:"Royal Canin",category:"Жидкие корма",pet:"Кошки",price:690,description:"Пауч 85 г, кролик, для стерилизованных",emoji:"🥫"},
+{id:82,name:"Hill's пауч 80 г курица",brand:"Hill's",category:"Жидкие корма",pet:"Кошки",price:740,description:"Пауч 80 г, курица, для взрослых кошек",emoji:"🥫"},
+{id:83,name:"Hill's пауч 80 г индейка",brand:"Hill's",category:"Жидкие корма",pet:"Кошки",price:740,description:"Пауч 80 г, индейка, для котят",emoji:"🥫"},
+{id:84,name:"Hill's пауч 80 г лосось",brand:"Hill's",category:"Жидкие корма",pet:"Кошки",price:740,description:"Пауч 80 г, лосось, для стерилизованных",emoji:"🥫"},
+{id:85,name:"Monge пауч 100 г курица для кошек",brand:"Monge",category:"Жидкие корма",pet:"Кошки",price:830,description:"Пауч 100 г, курица, для взрослых кошек",emoji:"🥫"},
+{id:86,name:"Monge пауч 100 г тунец для кошек",brand:"Monge",category:"Жидкие корма",pet:"Кошки",price:830,description:"Пауч 100 г, тунец, для стерилизованных",emoji:"🥫"},
+{id:87,name:"Monge пауч 100 г ягнёнок для кошек",brand:"Monge",category:"Жидкие корма",pet:"Кошки",price:830,description:"Пауч 100 г, ягнёнок, чувствительное пищеварение",emoji:"🥫"},
+{id:88,name:"Almo Nature пауч 70 г курица",brand:"Almo Nature",category:"Жидкие корма",pet:"Кошки",price:1000,description:"Пауч 70 г, курица, для взрослых кошек",emoji:"🥫"},
+{id:89,name:"Almo Nature пауч 70 г лосось",brand:"Almo Nature",category:"Жидкие корма",pet:"Кошки",price:1000,description:"Пауч 70 г, лосось, для котят",emoji:"🥫"},
+{id:90,name:"Almo Nature пауч 70 г тунец",brand:"Almo Nature",category:"Жидкие корма",pet:"Кошки",price:1000,description:"Пауч 70 г, тунец, для стерилизованных",emoji:"🥫"},
+{id:91,name:"Applaws пауч 70 г курица",brand:"Applaws",category:"Жидкие корма",pet:"Кошки",price:1200,description:"Пауч 70 г, курица, для взрослых кошек",emoji:"🥫"},
+{id:92,name:"Applaws пауч 70 г тунец",brand:"Applaws",category:"Жидкие корма",pet:"Кошки",price:1200,description:"Пауч 70 г, тунец, для котят",emoji:"🥫"},
+{id:93,name:"Applaws пауч 70 г лосось",brand:"Applaws",category:"Жидкие корма",pet:"Кошки",price:1200,description:"Пауч 70 г, лосось, для стерилизованных",emoji:"🥫"},
+
+/* --- ЖИДКИЕ КОРМА ДЛЯ СОБАК (20) --- */
+{id:94,name:"Pedigree пауч 85 г курица для собак",brand:"Pedigree",category:"Жидкие корма",pet:"Собаки",price:270,description:"Пауч 85 г, курица, для взрослых собак",emoji:"🥫"},
+{id:95,name:"Pedigree пауч 85 г говядина для собак",brand:"Pedigree",category:"Жидкие корма",pet:"Собаки",price:270,description:"Пауч 85 г, говядина, для взрослых собак",emoji:"🥫"},
+{id:96,name:"Pedigree пауч 85 г ягнёнок для собак",brand:"Pedigree",category:"Жидкие корма",pet:"Собаки",price:270,description:"Пауч 85 г, ягнёнок, для взрослых собак",emoji:"🥫"},
+{id:97,name:"Dog Chow пауч 85 г курица",brand:"Dog Chow",category:"Жидкие корма",pet:"Собаки",price:255,description:"Пауч 85 г, курица, для взрослых собак",emoji:"🥫"},
+{id:98,name:"Dog Chow пауч 85 г индейка",brand:"Dog Chow",category:"Жидкие корма",pet:"Собаки",price:255,description:"Пауч 85 г, индейка, для щенков",emoji:"🥫"},
+{id:99,name:"Dog Chow пауч 85 г лосось",brand:"Dog Chow",category:"Жидкие корма",pet:"Собаки",price:255,description:"Пауч 85 г, лосось, для взрослых собак",emoji:"🥫"},
+{id:100,name:"Cesar пауч 100 г курица для собак",brand:"Cesar",category:"Жидкие корма",pet:"Собаки",price:440,description:"Пауч 100 г, курица, для мелких пород",emoji:"🥫"},
+{id:101,name:"Cesar пауч 100 г говядина для собак",brand:"Cesar",category:"Жидкие корма",pet:"Собаки",price:440,description:"Пауч 100 г, говядина, для мелких пород",emoji:"🥫"},
+{id:102,name:"Cesar пауч 100 г утка для собак",brand:"Cesar",category:"Жидкие корма",pet:"Собаки",price:440,description:"Пауч 100 г, утка, для мелких пород",emoji:"🥫"},
+{id:103,name:"Brit консервы 400 г курица",brand:"Brit",category:"Жидкие корма",pet:"Собаки",price:1400,description:"Банка 400 г, курица, для взрослых собак",emoji:"🥫"},
+{id:104,name:"Brit консервы 400 г индейка",brand:"Brit",category:"Жидкие корма",pet:"Собаки",price:1400,description:"Банка 400 г, индейка, для взрослых собак",emoji:"🥫"},
+{id:105,name:"Brit консервы 400 г ягнёнок",brand:"Brit",category:"Жидкие корма",pet:"Собаки",price:1400,description:"Банка 400 г, ягнёнок, для взрослых собак",emoji:"🥫"},
+{id:106,name:"Monge банка 400 г говядина для собак",brand:"Monge",category:"Жидкие корма",pet:"Собаки",price:1700,description:"Банка 400 г, говядина, для взрослых собак",emoji:"🥫"},
+{id:107,name:"Monge банка 400 г курица для собак",brand:"Monge",category:"Жидкие корма",pet:"Собаки",price:1700,description:"Банка 400 г, курица, для взрослых собак",emoji:"🥫"},
+{id:108,name:"Monge банка 400 г лосось для собак",brand:"Monge",category:"Жидкие корма",pet:"Собаки",price:1700,description:"Банка 400 г, лосось, для взрослых собак",emoji:"🥫"},
+{id:109,name:"Royal Canin пауч 85 г курица для собак",brand:"Royal Canin",category:"Жидкие корма",pet:"Собаки",price:720,description:"Пауч 85 г, курица, для взрослых собак",emoji:"🥫"},
+{id:110,name:"Royal Canin пауч 85 г говядина для собак",brand:"Royal Canin",category:"Жидкие корма",pet:"Собаки",price:720,description:"Пауч 85 г, говядина, для взрослых собак",emoji:"🥫"},
+{id:111,name:"Royal Canin пауч 85 г индейка для собак",brand:"Royal Canin",category:"Жидкие корма",pet:"Собаки",price:720,description:"Пауч 85 г, индейка, для щенков",emoji:"🥫"},
+{id:112,name:"Cesar пауч 100 г лосось для собак",brand:"Cesar",category:"Жидкие корма",pet:"Собаки",price:440,description:"Пауч 100 г, лосось, для мелких пород",emoji:"🥫"},
+{id:113,name:"Pedigree пауч 85 г утка для собак",brand:"Pedigree",category:"Жидкие корма",pet:"Собаки",price:270,description:"Пауч 85 г, утка, для взрослых собак",emoji:"🥫"},
+
+/* --- СУХИЕ КОРМА ДЛЯ КОШЕК (10) --- */
+{id:114,name:"Whiskas 1,9 кг курица",brand:"Whiskas",category:"Сухие корма",pet:"Кошки",price:4100,description:"Сухой корм 1,9 кг, курица, для взрослых кошек",emoji:"🦴"},
+{id:115,name:"Probalance 1,8 кг курица",brand:"Probalance",category:"Сухие корма",pet:"Кошки",price:5000,description:"Сухой корм 1,8 кг, курица, для стерилизованных",emoji:"🦴"},
+{id:116,name:"Brit Premium 2 кг индейка",brand:"Brit",category:"Сухие корма",pet:"Кошки",price:5900,description:"Сухой корм 2 кг, индейка, для котят",emoji:"🦴"},
+{id:117,name:"Josera 2 кг курица",brand:"Josera",category:"Сухие корма",pet:"Кошки",price:7800,description:"Сухой корм 2 кг, курица, для взрослых кошек",emoji:"🦴"},
+{id:118,name:"Monge 2 кг курица для кошек",brand:"Monge",category:"Сухие корма",pet:"Кошки",price:8300,description:"Сухой корм 2 кг, курица, для стерилизованных",emoji:"🦴"},
+{id:119,name:"Pro Plan 1,5 кг курица",brand:"Pro Plan",category:"Сухие корма",pet:"Кошки",price:8700,description:"Сухой корм 1,5 кг, курица, для котят",emoji:"🦴"},
+{id:120,name:"Hill's 1,5 кг курица",brand:"Hill's",category:"Сухие корма",pet:"Кошки",price:10500,description:"Сухой корм 1,5 кг, курица, для стерилизованных",emoji:"🦴"},
+{id:121,name:"Acana 2 кг курица",brand:"Acana",category:"Сухие корма",pet:"Кошки",price:15500,description:"Сухой корм 2 кг, курица, беззерновой",emoji:"🦴"},
+{id:122,name:"Royal Canin 2 кг курица для кошек",brand:"Royal Canin",category:"Сухие корма",pet:"Кошки",price:16500,description:"Сухой корм 2 кг, курица, для взрослых кошек",emoji:"🦴"},
+{id:123,name:"Orijen 2 кг курица",brand:"Orijen",category:"Сухие корма",pet:"Кошки",price:23000,description:"Сухой корм 2 кг, курица, биологически соответствующий",emoji:"🦴"},
+
+/* --- СУХИЕ КОРМА ДЛЯ СОБАК (10) --- */
+{id:124,name:"Pedigree 13 кг курица для собак",brand:"Pedigree",category:"Сухие корма",pet:"Собаки",price:15500,description:"Сухой корм 13 кг, курица, для взрослых собак",emoji:"🦴"},
+{id:125,name:"Dog Chow 14 кг курица",brand:"Dog Chow",category:"Сухие корма",pet:"Собаки",price:18500,description:"Сухой корм 14 кг, курица, для щенков",emoji:"🦴"},
+{id:126,name:"Brit Premium 15 кг курица",brand:"Brit",category:"Сухие корма",pet:"Собаки",price:24900,description:"Сухой корм 15 кг, курица, для крупных пород",emoji:"🦴"},
+{id:127,name:"Probalance 15 кг курица",brand:"Probalance",category:"Сухие корма",pet:"Собаки",price:21900,description:"Сухой корм 15 кг, курица, для мелких пород",emoji:"🦴"},
+{id:128,name:"Josera 15 кг курица",brand:"Josera",category:"Сухие корма",pet:"Собаки",price:31900,description:"Сухой корм 15 кг, курица, для взрослых собак",emoji:"🦴"},
+{id:129,name:"Monge 12 кг ягнёнок для собак",brand:"Monge",category:"Сухие корма",pet:"Собаки",price:33900,description:"Сухой корм 12 кг, ягнёнок, для взрослых собак",emoji:"🦴"},
+{id:130,name:"Pro Plan 14 кг курица",brand:"Pro Plan",category:"Сухие корма",pet:"Собаки",price:35000,description:"Сухой корм 14 кг, курица, для крупных пород",emoji:"🦴"},
+{id:131,name:"Hill's 12 кг курица",brand:"Hill's",category:"Сухие корма",pet:"Собаки",price:42900,description:"Сухой корм 12 кг, курица, для взрослых собак",emoji:"🦴"},
+{id:132,name:"Royal Canin 15 кг курица для собак",brand:"Royal Canin",category:"Сухие корма",pet:"Собаки",price:50000,description:"Сухой корм 15 кг, курица, для крупных пород",emoji:"🦴"},
+{id:133,name:"Acana 11,4 кг курица",brand:"Acana",category:"Сухие корма",pet:"Собаки",price:54900,description:"Сухой корм 11,4 кг, курица, беззерновой",emoji:"🦴"},
+
+/* --- КОРМА ДЛЯ РЫБ (8) --- */
+{id:134,name:"Tetra Min хлопья 100 мл",brand:"Tetra",category:"Корма для рыб",pet:"Рыбки",price:2300,description:"Хлопья для всех видов рыб, 100 мл",emoji:"🐟"},
+{id:135,name:"Tetra Pro 100 мл",brand:"Tetra",category:"Корма для рыб",pet:"Рыбки",price:3400,description:"Энергетические хлопья, 100 мл",emoji:"🐟"},
+{id:136,name:"JBL NovoBel 250 мл",brand:"JBL",category:"Корма для рыб",pet:"Рыбки",price:3900,description:"Хлопья для тропических рыб, 250 мл",emoji:"🐟"},
+{id:137,name:"Sera Goldy гранулы",brand:"Sera",category:"Корма для рыб",pet:"Рыбки",price:2900,description:"Гранулы для золотых рыбок, 100 мл",emoji:"🐟"},
+{id:138,name:"Tetra Cichlid для цихлид",brand:"Tetra",category:"Корма для рыб",pet:"Рыбки",price:2700,description:"Гранулы для цихлид, 100 мл",emoji:"🐟"},
+{id:139,name:"JBL для креветок",brand:"JBL",category:"Корма для рыб",pet:"Рыбки",price:3200,description:"Корм для креветок, 50 мл",emoji:"🦐"},
+{id:140,name:"Hikari Gold",brand:"Hikari",category:"Корма для рыб",pet:"Рыбки",price:5500,description:"Гранулы для золотых рыбок, 100 г",emoji:"🐟"},
+{id:141,name:"Набор на время отпуска",brand:"Tetra",category:"Корма для рыб",pet:"Рыбки",price:1500,description:"Блок-корм на 14 дней, для всех рыб",emoji:"📦"},
+
+/* --- ПОИЛКИ (10) --- */
+{id:142,name:"Миска-непроливайка",brand:"Petcomfort",category:"Поилки",pet:"Кошки и собаки",price:2900,description:"Силиконовая, 500 мл, нескользящая",emoji:"🥣"},
+{id:143,name:"Миска-непроливайка L",brand:"Petcomfort",category:"Поилки",pet:"Собаки",price:4500,description:"Силиконовая, 1 л, нескользящая",emoji:"🥣"},
+{id:144,name:"Дорожная поилка",brand:"Trixie",category:"Поилки",pet:"Кошки и собаки",price:3500,description:"Бутылка 500 мл с поильником",emoji:"🥤"},
+{id:145,name:"Автопоилка-бутылка",brand:"Trixie",category:"Поилки",pet:"Кошки и собаки",price:4900,description:"Бутылка 1 л + миска, самополив",emoji:"💧"},
+{id:146,name:"Фонтанчик с фильтром 2 л",brand:"Pet Tech",category:"Поилки",pet:"Кошки",price:11900,description:"2 л, угольный фильтр, USB",emoji:"⛲"},
+{id:147,name:"Фонтанчик с фильтром 3 л",brand:"Pet Tech",category:"Поилки",pet:"Кошки",price:14900,description:"3 л, угольный фильтр, USB, тихий",emoji:"⛲"},
+{id:148,name:"Керамический фонтанчик",brand:"Pet Tech",category:"Поилки",pet:"Кошки",price:19900,description:"Керамика, 1,5 л, с фильтром",emoji:"⛲"},
+{id:149,name:"Фонтанчик для собак 5 л",brand:"Pet Tech",category:"Поилки",pet:"Собаки",price:24900,description:"5 л, фильтр, для средних и крупных пород",emoji:"⛲"},
+{id:150,name:"Поилка с подогревом",brand:"Pet Tech",category:"Поилки",pet:"Собаки",price:26900,description:"3 л, подогрев, для улицы, 40 Вт",emoji:"🔥"},
+{id:151,name:"Двойная миска на подставке",brand:"Petcomfort",category:"Поилки",pet:"Кошки и собаки",price:5900,description:"2 миски по 400 мл, металлическая подставка",emoji:"🥣"}
+];
+
+/* =========================================================
+   УТИЛИТЫ
+   ========================================================= */
+function formatPrice(n){
+  return n.toLocaleString('ru-RU').replace(/\u00A0/g,' ')+' ₸';
+}
+
+/* Telegram-username магазина (без @) */
+const TG_USERNAME = 'ZooDomKZ';
+
+/* =========================================================
+   СТЕЙТ
+   ========================================================= */
+let cart = {};
+try{ cart = JSON.parse(localStorage.getItem('zoodom_cart')||'{}'); if(typeof cart!=='object'||Array.isArray(cart)) cart={}; }catch(e){ cart={}; }
+const filterState = {search:'',category:'',pet:'',priceFrom:null,priceTo:null,brand:'',sort:'default'};
+
+/* =========================================================
+   РЕНДЕР КАТЕГОРИЙ
+   ========================================================= */
+function renderCategories(){
+  const tilesEl = document.getElementById('catTiles');
+  const navEl = document.getElementById('catNav');
+  const filterCat = document.getElementById('filterCategory');
+  const filterBrand = document.getElementById('filterBrand');
+  tilesEl.innerHTML = '';
+  navEl.innerHTML = '<button class="active" data-cat="">Все товары</button>';
+  filterCat.innerHTML = '<option value="">Все</option>';
+
+  CATEGORIES_INFO.forEach(c=>{
+    const count = PRODUCTS.filter(p=>p.category===c.name).length;
+    const tile = document.createElement('div');
+    tile.className = 'cat-tile';
+    tile.dataset.cat = c.name;
+    tile.innerHTML = `
+      <div class="cat-emoji" style="background:${c.grad}">${c.emoji}</div>
+      <div class="cat-name">${c.name}</div>
+      <div class="cat-count">${count} тов.</div>`;
+    tile.addEventListener('click',()=>{
+      filterState.category = c.name;
+      document.getElementById('filterCategory').value = c.name;
+      document.querySelectorAll('.cat-nav button').forEach(b=>b.classList.toggle('active',b.dataset.cat===c.name));
+      renderProducts();
+      document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
+    });
+    tilesEl.appendChild(tile);
+
+    const navBtn = document.createElement('button');
+    navBtn.dataset.cat = c.name;
+    navBtn.textContent = c.emoji+' '+c.name;
+    navBtn.addEventListener('click',()=>{
+      filterState.category = c.name;
+      document.getElementById('filterCategory').value = c.name;
+      document.querySelectorAll('.cat-nav button').forEach(b=>b.classList.toggle('active',b===navBtn));
+      renderProducts();
+      document.getElementById('catalog').scrollIntoView({behavior:'smooth'});
+    });
+    navEl.appendChild(navBtn);
+
+    const opt = document.createElement('option');
+    opt.value = c.name; opt.textContent = c.name;
+    filterCat.appendChild(opt);
+  });
+
+  document.querySelector('.cat-nav button[data-cat=""]').addEventListener('click',function(){
+    filterState.category='';
+    document.getElementById('filterCategory').value='';
+    document.querySelectorAll('.cat-nav button').forEach(b=>b.classList.toggle('active',b===this));
+    renderProducts();
+  });
+
+  const brands = [...new Set(PRODUCTS.map(p=>p.brand))].sort();
+  brands.forEach(b=>{
+    const o = document.createElement('option');
+    o.value=b; o.textContent=b;
+    filterBrand.appendChild(o);
+  });
+}
+
+/* =========================================================
+   ФИЛЬТРАЦИЯ + СОРТИРОВКА
+   ========================================================= */
+function getFiltered(){
+  const s = filterState.search.trim().toLowerCase();
+  const pet = filterState.pet.toLowerCase();
+  let list = PRODUCTS.filter(p=>{
+    if(s && !(p.name.toLowerCase().includes(s)||p.brand.toLowerCase().includes(s)||p.description.toLowerCase().includes(s))) return false;
+    if(filterState.category && p.category!==filterState.category) return false;
+    /* ИСПРАВЛЕНО: сравнение без учёта регистра — «Кошки и собаки» попадёт в оба фильтра */
+    if(pet && !p.pet.toLowerCase().includes(pet)) return false;
+    if(filterState.priceFrom!=null && p.price<filterState.priceFrom) return false;
+    if(filterState.priceTo!=null && p.price>filterState.priceTo) return false;
+    if(filterState.brand && p.brand!==filterState.brand) return false;
+    return true;
+  });
+  switch(filterState.sort){
+    case 'price-asc': list.sort((a,b)=>a.price-b.price); break;
+    case 'price-desc': list.sort((a,b)=>b.price-a.price); break;
+    case 'name-asc': list.sort((a,b)=>a.name.localeCompare(b.name,'ru')); break;
+    case 'name-desc': list.sort((a,b)=>b.name.localeCompare(a.name,'ru')); break;
+  }
+  return list;
+}
+
+/* =========================================================
+   РЕНДЕР ТОВАРОВ
+   ========================================================= */
+function renderProducts(){
+  const grid = document.getElementById('productGrid');
+  const list = getFiltered();
+  document.getElementById('resultsCount').textContent = 'Найдено: '+list.length;
+  if(list.length===0){
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:#7A5C4A"><div style="font-size:3rem">🐾</div><p style="margin-top:12px;font-weight:700">Товары не найдены. Попробуйте изменить фильтры.</p></div>';
+    return;
+  }
+  grid.innerHTML = list.map(p=>{
+    const grad = CAT_GRAD[p.category] || 'linear-gradient(135deg,#FFD3B6,#FFAAA5)';
+    return `<div class="product-card">
+      <div class="product-image" style="background:${grad}">${p.emoji}</div>
+      <div class="product-body">
+        <div class="product-brand">${p.brand}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.description}</div>
+        <div class="product-price">${formatPrice(p.price)}</div>
+        <button class="add-btn" data-id="${p.id}">В корзину 🛒</button>
+      </div>
+    </div>`;
+  }).join('');
+  grid.querySelectorAll('.add-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      addToCart(parseInt(btn.dataset.id,10));
+      btn.textContent = '✓ Добавлено';
+      setTimeout(()=>btn.textContent='В корзину 🛒',900);
+    });
+  });
+}
+
+/* =========================================================
+   КОРЗИНА
+   ========================================================= */
+function saveCart(){ localStorage.setItem('zoodom_cart', JSON.stringify(cart)); }
+
+function addToCart(id){
+  cart[id] = (cart[id]||0) + 1;
+  saveCart();
+  updateCartUI();
+  openCart();
+}
+
+function removeFromCart(id){
+  delete cart[id];
+  saveCart();
+  updateCartUI();
+}
+
+function changeQty(id, delta){
+  cart[id] = (cart[id]||0) + delta;
+  if(cart[id] <= 0) delete cart[id];
+  saveCart();
+  updateCartUI();
+}
+
+function updateCartUI(){
+  const count = Object.values(cart).reduce((s,n)=>s+n,0);
+  document.getElementById('cartCount').textContent = count;
+  const itemsEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+  const keys = Object.keys(cart);
+  if(keys.length===0){
+    itemsEl.innerHTML = '<div class="cart-empty"><span class="em">🐾</span>Корзина пуста.<br>Добавьте что-нибудь для любимца!</div>';
+    footerEl.style.display = 'none';
+    return;
+  }
+  footerEl.style.display = '';
+  let total = 0;
+  itemsEl.innerHTML = keys.map(idStr=>{
+    const id = parseInt(idStr,10);
+    const p = PRODUCTS.find(x=>x.id===id);
+    if(!p) return '';
+    const qty = cart[idStr];
+    const sum = p.price * qty;
+    total += sum;
+    const grad = CAT_GRAD[p.category] || 'linear-gradient(135deg,#FFD3B6,#FFAAA5)';
+    return `<div class="cart-item">
+      <div class="cart-item-img" style="background:${grad}">${p.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${p.name}</div>
+        <div class="cart-item-price">${formatPrice(p.price)} × ${qty} = <b>${formatPrice(sum)}</b></div>
+        <div class="cart-qty">
+          <button data-act="dec" data-id="${id}">−</button>
+          <span>${qty}</span>
+          <button data-act="inc" data-id="${id}">+</button>
+          <button class="cart-remove" data-act="del" data-id="${id}" title="Удалить">🗑️</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById('cartTotal').textContent = formatPrice(total);
+  itemsEl.querySelectorAll('button[data-act]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      const id = parseInt(b.dataset.id,10);
+      if(b.dataset.act==='inc') changeQty(id,1);
+      else if(b.dataset.act==='dec') changeQty(id,-1);
+      else if(b.dataset.act==='del') removeFromCart(id);
+    });
+  });
+}
+
+function openCart(){
+  document.getElementById('cartPanel').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+}
+function closeCartFn(){
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+}
+
+/* =========================================================
+   ОФОРМЛЕНИЕ ЗАКАЗА — открывает Telegram с готовым текстом
+   ========================================================= */
+function openCheckout(){
+  if(Object.keys(cart).length===0){
+    alert('Корзина пуста 🐾');
+    return;
+  }
+  document.getElementById('checkoutFormWrap').style.display='';
+  document.getElementById('orderSuccess').style.display='none';
+  document.getElementById('checkoutForm').reset();
+  document.getElementById('checkoutModal').classList.add('open');
+}
+function closeCheckout(){
+  document.getElementById('checkoutModal').classList.remove('open');
+}
+
+/* Собираем текст заказа (обычный текст, не HTML) */
+function buildOrderText(name, phone, address, message){
+  const items = Object.entries(cart).map(([id, qty]) => {
+    const p = PRODUCTS.find(x => x.id === +id);
+    if(!p) return '';
+    return `• ${p.name} — ${qty} × ${formatPrice(p.price)} = ${formatPrice(p.price * qty)}`;
+  }).filter(Boolean).join('\n');
+
+  const total = Object.entries(cart).reduce(
+    (s, [id, q]) => s + (PRODUCTS.find(p => p.id === +id)?.price || 0) * q, 0
+  );
+
+  let text = '🐾 Новый заказ — ЗооДом\n\n';
+  text += 'Имя: ' + name + '\n';
+  text += 'Телефон: ' + phone + '\n';
+  text += 'Адрес: ' + address + '\n';
+  if(message) text += 'Сообщение: ' + message + '\n';
+  text += '\nТовары:\n' + items + '\n\n';
+  text += 'Итого: ' + formatPrice(total);
+  return text;
+}
+
+/* =========================================================
+   СОБЫТИЯ
+   ========================================================= */
+document.getElementById('search').addEventListener('input',e=>{
+  filterState.search = e.target.value;
+  renderProducts();
+});
+document.getElementById('filterCategory').addEventListener('change',e=>{
+  filterState.category = e.target.value;
+  document.querySelectorAll('.cat-nav button').forEach(b=>b.classList.toggle('active',(b.dataset.cat||'')===e.target.value));
+  renderProducts();
+});
+document.getElementById('filterPet').addEventListener('change',e=>{
+  filterState.pet = e.target.value; renderProducts();
+});
+document.getElementById('filterPriceFrom').addEventListener('input',e=>{
+  filterState.priceFrom = e.target.value==='' ? null : Math.max(0,parseInt(e.target.value,10)||0);
+  renderProducts();
+});
+document.getElementById('filterPriceTo').addEventListener('input',e=>{
+  filterState.priceTo = e.target.value==='' ? null : Math.max(0,parseInt(e.target.value,10)||0);
+  renderProducts();
+});
+document.getElementById('filterBrand').addEventListener('change',e=>{
+  filterState.brand = e.target.value; renderProducts();
+});
+document.getElementById('sortSelect').addEventListener('change',e=>{
+  filterState.sort = e.target.value; renderProducts();
+});
+document.getElementById('resetFilters').addEventListener('click',()=>{
+  filterState.search=''; filterState.category=''; filterState.pet='';
+  filterState.priceFrom=null; filterState.priceTo=null; filterState.brand='';
+  document.getElementById('search').value='';
+  document.getElementById('filterCategory').value='';
+  document.getElementById('filterPet').value='';
+  document.getElementById('filterPriceFrom').value='';
+  document.getElementById('filterPriceTo').value='';
+  document.getElementById('filterBrand').value='';
+  document.querySelectorAll('.cat-nav button').forEach(b=>b.classList.toggle('active',b.dataset.cat===''));
+  renderProducts();
+});
+
+document.getElementById('cartBtn').addEventListener('click',openCart);
+document.getElementById('closeCart').addEventListener('click',closeCartFn);
+document.getElementById('cartOverlay').addEventListener('click',closeCartFn);
+document.getElementById('checkoutBtn').addEventListener('click',openCheckout);
+document.getElementById('cancelCheckout').addEventListener('click',closeCheckout);
+document.getElementById('checkoutModal').addEventListener('click',e=>{
+  if(e.target.id==='checkoutModal') closeCheckout();
+});
+
+/* Отправка: собираем текст → открываем t.me/username?text=... → показываем успех */
+document.getElementById('checkoutForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const name    = document.getElementById('orderName').value.trim();
+  const phone   = document.getElementById('orderPhone').value.trim();
+  const address = document.getElementById('orderAddress').value.trim();
+  const message = document.getElementById('orderMessage').value.trim();
+  if(!name || !phone || !address){ alert('Заполните все обязательные поля'); return; }
+
+  const text = buildOrderText(name, phone, address, message);
+  const url  = 'https://t.me/' + TG_USERNAME + '?text=' + encodeURIComponent(text);
+
+  /* Открываем Telegram в новой вкладке (на мобильных откроется приложение) */
+  const tgWindow = window.open(url, '_blank', 'noopener');
+
+  /* Показываем экран успеха с запасной прямой ссылкой */
+  document.getElementById('checkoutFormWrap').style.display = 'none';
+  document.getElementById('orderSuccess').style.display = '';
+  document.getElementById('tgLink').href = url;
+
+  /* Очищаем корзину */
+  cart = {};
+  saveCart();
+  updateCartUI();
+
+  /* Если вкладка не открылась — предупредим */
+  if(!tgWindow){
+    console.warn('Popup blocked, используйте ссылку в окне успеха');
+  }
+});
+
+/* =========================================================
+   СТАРТ
+   ========================================================= */
+renderCategories();
+renderProducts();
+updateCartUI();
+</script>
+</body>
+</html>
